@@ -1,4 +1,4 @@
-run with pythons sim.py
+run with python sim.py
 
 hey sluggos, this simulation is pretty simple to use. Here's how it works.
 
@@ -30,4 +30,5 @@ down - move down
 left - move left
 right - move right
 
+![alt text](https://raw.githubusercontent.com/jcirimel/sluggosim/master/Display.jpg)
 
