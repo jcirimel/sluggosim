@@ -10,8 +10,8 @@ numpy (don't know if this is installed by default)
 
 ALL OF THESE CAN AND SHOULD BE INSTALLED WITH PIP. just do pip install <package>, you might need root (sudo).
 
-Evey frame, algo.run() is given the given, the RGB array which is already set up nicely work work with 
-opencv, and a controller to move around the ROV. There is full degree of movement with transpositions 
+Evey frame, algo.run() is given the image, the RGB array which is already set up nicely work work with 
+opencv, and a controller to move around the ROV. There is full degree of movement with translations 
 (like sliding along x,y,z) and rotations (pitch, yaw, roll). These can be used by doing something like
 controller.move_in() or controller.pitch_left(). controller.stop() should be called at the start of each
 algo.run() iteration because there is no way to return specific transformations to neutral.
