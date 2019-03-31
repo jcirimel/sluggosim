@@ -44,3 +44,4 @@ right - move right
 
 ![alt text](https://raw.githubusercontent.com/jcirimel/sluggosim/master/Display.jpg)
 
+Thank you to Dylan for contributing the line following code.
