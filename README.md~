@@ -1,6 +1,6 @@
 run with python sim.py
 
-Hey sluggos, this simulation is pretty simple to use. This should be used to tests your ROV computer vision/autonomous code. Here's how it works.
+hey sluggos, this simulation is pretty simple to use. Here's how it works.
 
 requirements:
 python version of opencv

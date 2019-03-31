@@ -1,6 +1,6 @@
 import math
 
-from algo import *
+from linefollow import *
 
 import cv2
 import numpy as np
@@ -11,7 +11,10 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+
+
 class Controller:
+
     def __init__(self):
         self.x = 0
         self.y = 0
@@ -86,8 +89,8 @@ def Plane(x,y,z,theta,phi,gamma,l,w, wire = True):
             (0,1,2,3)
             )
 
-   
-    
+
+
     if wire == True:
         glBegin(GL_LINES)
         for edge in edges:
@@ -130,6 +133,8 @@ def loadTexture(file):
     return texid
 
 def main():
+    autonomousMode = False
+    
     pygame.init()
     display = (800,600)
     controller = Controller()
@@ -139,21 +144,27 @@ def main():
     gluPerspective(45, (display[0]/display[1]), 0.1, 100)
     glRotatef(180, 0,1,0)
     glTranslatef(0,0,t)
-   
+
     while True:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                  pygame.quit()
                  quit()
             d = 0.1
             f = 1
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    autonomousMode = True
+
             if event.type == pygame.KEYDOWN:
                  if event.key == pygame.K_LEFT:
                      glTranslatef(-d,0,0)
                      x -= d
                  if event.key == pygame.K_RIGHT:
-                     glTranslatef(d,0,0) 
-                     x += d 
+                     glTranslatef(d,0,0)
+                     x += d
                  if event.key == pygame.K_DOWN:
                      glTranslatef(0,d,0)
                      y += d
@@ -187,12 +198,12 @@ def main():
                      glTranslate(x,y,z)
 
 
- 
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                  if event.button == 4:
                      glTranslatef(0,0,d)
                      z += d
- 
+
                  if event.button == 5:
                      glTranslatef(0,0,-d)
                      z -= d
@@ -202,8 +213,8 @@ def main():
                  glTranslatef(-d,0,0)
                  x -= d
              if controller.x == 1:
-                 glTranslatef(d,0,0) 
-                 x += d 
+                 glTranslatef(d,0,0)
+                 x += d
              if controller.y == -1:
                  glTranslatef(0,d,0)
                  y += d
@@ -242,9 +253,9 @@ def main():
                  glTranslatef(0,0,-d)
                  z -= d
 
-       
+
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        
+
         loadTexture('redline.bmp')
         Plane(0  , 0 ,  0, 0  , 0  , 0 , 4 , 3, wire = False)
         loadTexture('purple.bmp')
@@ -254,7 +265,7 @@ def main():
 
         string_image = pygame.image.tostring(screen, 'RGB')
         temp_surf = pygame.image.fromstring(string_image,(800, 600),'RGB' )
-        
+
         tmp_arr = pygame.surfarray.array3d(temp_surf)
         rotates = np.rot90(tmp_arr,3)
         rotates = np.fliplr(rotates)
@@ -263,11 +274,11 @@ def main():
         opencv_data = cv2.merge([b,g,r])
         cv2.imwrite("Display.jpg",opencv_data) #debug frame
 
-        pygame.display.flip() 
-        
-        algo.run(opencv_data,controller)
+        pygame.display.flip()
+
+        linefollow.run(opencv_data, controller, autonomousMode)
 
         pygame.time.wait(10)
 
-   
+
 main()
